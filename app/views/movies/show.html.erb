@@ -1,0 +1,27 @@
+<h1>Movie</h1>
+
+<p>
+  <b>Title</b><br>
+  <%= @movie.title %>
+</p>
+
+<p>
+  <b>Rating</b><br>
+  <%= @movie.rating %>
+</p>
+
+<p>
+  <b>Description</b><br>
+  <%= @movie.description %>
+</p>
+
+<p>
+  <b>Release date</b><br>
+  <%= @movie.release_date %>
+</p>
+
+<div class="form-actions">
+  <%= link_to 'Back', movies_path, :class => 'btn'  %>
+  <%= link_to 'Edit', edit_movie_path(@movie), :class => 'btn' %>
+  <%= link_to 'Delete', movie_path(@movie), :method => 'delete', :confirm => 'Are you sure?', :class => 'btn btn-danger' %>
+</div>

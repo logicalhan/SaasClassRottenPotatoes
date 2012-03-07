@@ -1,3 +1,9 @@
+/*
+ *= require_self
+ *= require bootstrapped
+ *= require custom_styles
+*/
+
 html, body {
   margin: 0;
   padding: 0;

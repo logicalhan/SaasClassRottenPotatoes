@@ -24,7 +24,7 @@ group :assets do
 end
 
 gem 'jquery-rails'
-
+gem 'bootstrapped-rails'
 # Use unicorn as the web server
 # gem 'unicorn'
 
@@ -32,4 +32,3 @@ gem 'jquery-rails'
 # gem 'capistrano'
 
 # To use debugger
-gem 'haml'
