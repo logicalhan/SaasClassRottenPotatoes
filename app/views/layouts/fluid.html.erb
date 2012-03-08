@@ -26,27 +26,9 @@
   </head>
   <body>
 
-    <div class="navbar navbar-fixed-top">
-      <div class="navbar-inner">
-          <div class="container">
-          <a class="btn btn-navbar" data-target=".nav-collapse" data-toggle="collapse">
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </a>
-          <a class="brand" href="#">Rottenpotatoes</a>
-          <div class="container nav-collapse">
-            <ul class="nav">
-                <li><%= link_to "Link1", "#"  %></li>
-                <li><%= link_to "Link2", "#"  %></li>
-                <li><%= link_to "Link3", "#"  %></li>
-            </ul>
-          </div><!--/.nav-collapse -->
-        </div>
-      </div>
-    </div>
+  <%= render partial: "layouts/bootstrapped_navigation" %>
 
-    <div class="container">
+    <div class="container" id='main_container'>
       <div class="content">
         <div class="row">
           <div class="span9">

@@ -2,6 +2,7 @@
  *= require_self
  *= require bootstrapped
  *= require custom_styles
+ *= require movies
 */
 
 html, body {

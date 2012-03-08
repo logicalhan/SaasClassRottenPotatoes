@@ -1,26 +1,34 @@
 <h1>Movies</h1>
-<table class="table table-striped">
-  <thead>
-    <tr>
-      <th>ID</th>
-      <th>Title</th>
-      <th>Created at</th>
-      <th>Actions</th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @movies.each do |movie| %>
+<%= form_tag movies_path, method: :get do %> 
+  <%= hidden_field_tag :direction, params[:direction] %>  
+  <%= hidden_field_tag :sort, params[:sort] %>
+
+  <table class="table table-striped" id='movies'>
+    <thead>
       <tr>
-        <td><%= movie.id %></td>
-        <td><%= link_to movie.title, movie_path(movie) %></td>
-        <td><%= movie.created_at %></td>
-        <td>
-          <%= link_to 'Edit', edit_movie_path(movie), :class => 'btn btn-mini' %>
-          <%= link_to 'Destroy', movie_path(movie), :method => :delete, :confirm => 'Are you sure?', :class => 'btn btn-mini btn-danger' %>
-        </td>
+        <th class="<%= currently_sorted? "title"%>"><%= sortable "title", "title" %></th>
+        <th class="<%= currently_sorted? "rating"%>"><%= sortable "rating", "rating" %></th>
+        <th class="<%= currently_sorted? "release_date"%>"><%= sortable "release_date", "release_date" %></th>
+        <th></th>
+        <th></th>
       </tr>
-    <% end %>
-  </tbody>
-</table>
+    </thead>
+    <tbody>
+      <% @movies.each do |movie| %>
+        <tr>
+          <td><%= link_to movie.title, movie_path(movie) %></td>
+          <td><%= movie.rating %></td>
+          <td><%= movie.release_date.strftime("%b %Y")%></td>
+          <td>
+            <%= link_to 'Edit', edit_movie_path(movie), :class => 'btn btn-mini' %>
+            <%= link_to 'Destroy', movie_path(movie), :method => :delete, :confirm => 'Are you sure?', :class => 'btn btn-mini btn-danger' %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>    
+
+<% end %>
+
 
 <%= link_to 'New', new_movie_path, :class => 'btn btn-primary' %>
