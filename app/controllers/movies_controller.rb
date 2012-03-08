@@ -1,5 +1,5 @@
 class MoviesController < ApplicationController
-
+  helper_method :sort_direction, :sort_column
   def show
     id = params[:id] # retrieve movie ID from URI route
     @movie = Movie.find(id) # look up movie by unique ID
@@ -7,7 +7,12 @@ class MoviesController < ApplicationController
   end
 
   def index
-    @movies = Movie.all
+    @all_ratings = Movie::RATINGS
+    ratings = params[:ratings] ? params[:ratings].keys : @all_ratings
+
+    @movies = params[:sort] ? Movie.order("#{sort_column} #{sort_direction}") : Movie.where("title is not null")
+    @movies = @movies.by_ratings(ratings)
+    
   end
 
   def new
@@ -36,6 +41,13 @@ class MoviesController < ApplicationController
     @movie.destroy
     flash[:notice] = "Movie '#{@movie.title}' deleted."
     redirect_to movies_path
+  end
+  private 
+  def sort_column
+    %w[title rating description release_date].include?(params[:sort]) ? params[:sort] : "title" 
+  end  
+  def sort_direction
+    %w[asc desc].include?(params[:direction]) ? params[:direction] : "asc" 
   end
 
 end
