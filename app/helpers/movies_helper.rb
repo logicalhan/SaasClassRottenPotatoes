@@ -15,7 +15,7 @@ module MoviesHelper
     else
       direction = "asc"
     end
-    link_to title, params.merge(:sort => column, :direction => direction, :page => nil), {id: css_id }
+    link_to title.titleize, params.merge(:sort => column, :direction => direction, :page => nil), {id: css_id }
   end
   def currently_sorted?(columnname)
   	return "hilite" if (params[:sort] and (params[:sort] == columnname))
