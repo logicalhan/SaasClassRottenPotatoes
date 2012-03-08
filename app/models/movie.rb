@@ -1,5 +1,5 @@
 class Movie < ActiveRecord::Base
-	RATINGS = Movie.map(&:rating).uniq.sort
+	RATINGS = Movie.order("rating").map(&:rating).uniq.sort
 	scope :by_ratings, lambda {|ratings| where(rating: ratings) }
 end
 
