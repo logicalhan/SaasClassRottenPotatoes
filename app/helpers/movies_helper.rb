@@ -6,7 +6,15 @@ module MoviesHelper
   def sortable(column, title = nil)
     title ||= column.titleize
     css_id = title + "_" + "header"
-    direction = ((column == sort_column) && (sort_direction == "asc")) ? "desc" : "asc"
+    if params[:direction]
+      if params[:direction] == "asc"
+        direction = "desc"
+      else
+        direction = "asc"
+      end
+    else
+      direction = "asc"
+    end
     link_to title, params.merge(:sort => column, :direction => direction, :page => nil), {id: css_id }
   end
   def currently_sorted?(columnname)
