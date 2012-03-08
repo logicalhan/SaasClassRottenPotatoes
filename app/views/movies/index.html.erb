@@ -2,7 +2,21 @@
 <%= form_tag movies_path, method: :get do %> 
   <%= hidden_field_tag :direction, params[:direction] %>  
   <%= hidden_field_tag :sort, params[:sort] %>
-
+  <h3>Include:</h3>
+  <% @all_ratings.each do |rating| %>
+    <%= rating %>
+    <% if params[:ratings]%>
+      <% logger.info "------ ==== ---- true"%>
+      <% if params[:ratings][rating] %>
+        <%= check_box_tag "ratings[#{rating}]", params[:ratings][rating], true %>
+      <% else -%>
+        <%= check_box_tag "ratings[#{rating}]", '0', false %>
+      <% end -%>
+    <% else -%>
+     <%= check_box_tag "ratings[#{rating}]", '0', false %>
+   <% end -%>
+    <%= submit_tag "Refresh", id: "ratings_submit"%>
+  <% end -%>
   <table class="table table-striped" id='movies'>
     <thead>
       <tr>
@@ -18,7 +32,7 @@
         <tr>
           <td><%= link_to movie.title, movie_path(movie) %></td>
           <td><%= movie.rating %></td>
-          <td><%= movie.release_date.strftime("%b %Y")%></td>
+          <td><%= movie.release_date%></td>
           <td>
             <%= link_to 'Edit', edit_movie_path(movie), :class => 'btn btn-mini' %>
             <%= link_to 'Destroy', movie_path(movie), :method => :delete, :confirm => 'Are you sure?', :class => 'btn btn-mini btn-danger' %>

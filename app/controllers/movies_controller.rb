@@ -7,7 +7,12 @@ class MoviesController < ApplicationController
   end
 
   def index
-      @movies = params[:sort] ? Movie.order("#{sort_column} #{sort_direction}") : Movie.all
+    @all_ratings = Movie::RATINGS
+    ratings = params[:ratings] ? params[:ratings].keys : @all_ratings
+
+    @movies = params[:sort] ? Movie.order("#{sort_column} #{sort_direction}") : Movie.where("title is not null")
+    @movies = @movies.by_ratings(ratings)
+    
   end
 
   def new
@@ -44,4 +49,5 @@ class MoviesController < ApplicationController
   def sort_direction
     %w[asc desc].include?(params[:direction]) ? params[:direction] : "asc" 
   end
+
 end
