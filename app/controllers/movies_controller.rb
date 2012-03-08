@@ -9,11 +9,22 @@ class MoviesController < ApplicationController
 
   def index
     @all_ratings = Movie::RATINGS
-    ratings = determine_ratings_filter
     @movies = Movie.where("title is not null")
-    determine_sort
-    @movies = @movies.by_ratings(ratings)
-    logger.info "------ ==== ---- #{session}"
+    if params[:sort] 
+      @movies = @movies.order("#{sort_column} #{sort_direction}")
+      if params[:ratings]
+        ratings = params[:ratings].keys
+      elsif session[:ratings]
+        params[:ratings] = session[:ratings]
+        redirect_to params
+      end
+    elsif session[:sort]
+      params[:sort] = session[:sort]
+      redirect_to params
+    else
+      ratings = @all_ratings
+      @movies = @movies.by_ratings(ratings)
+    end
   end
 
   def new
@@ -56,26 +67,9 @@ class MoviesController < ApplicationController
   end
   def store_session_ratings
     session[:ratings] = params[:ratings] if params[:ratings]
-    
   end
   def store_session_sort_and_direction
     session[:sort] = params[:sort] if params[:sort]
     session[:direction] = params[:direction] if params[:direction]
-  end
-  def determine_ratings_filter 
-    if params[:ratings]
-      return params[:ratings].keys
-    elsif session[:ratings]
-      return session[:ratings].keys
-    else
-      return @all_ratings
-    end
-  end
-  def determine_sort
-    if params[:sort] 
-      @movies = @movies.order("#{sort_column} #{sort_direction}")
-    elsif session[:sort]
-      @movies = @movies.order("#{session[:sort]} #{session[:direction]}")
-    end
   end
 end

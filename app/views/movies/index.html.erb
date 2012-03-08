@@ -7,10 +7,8 @@
     <%= rating %>
     <% if (params[:ratings] and (params[:ratings][rating]))%>
       <%= check_box_tag "ratings[#{rating}]", params[:ratings][rating], true %>
-    <% elsif (session[:ratings] and session[:ratings][rating]) -%>
-      <%= check_box_tag "ratings[#{rating}]", session[:ratings][rating], true %>
     <% else -%>
-      <%= check_box_tag "ratings[#{rating}]", "0", false %>
+      <%= check_box_tag "ratings[#{rating}]", '0', false %>
     <% end -%>
     <%= submit_tag "Refresh", id: "ratings_submit"%>
   <% end -%>
