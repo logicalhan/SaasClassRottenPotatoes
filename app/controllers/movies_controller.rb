@@ -1,5 +1,6 @@
 class MoviesController < ApplicationController
   helper_method :sort_direction, :sort_column
+  before_filter :store_session_info
   def show
     id = params[:id] # retrieve movie ID from URI route
     @movie = Movie.find(id) # look up movie by unique ID
@@ -8,11 +9,22 @@ class MoviesController < ApplicationController
 
   def index
     @all_ratings = Movie::RATINGS
-    ratings = params[:ratings] ? params[:ratings].keys : @all_ratings
-
-    @movies = params[:sort] ? Movie.order("#{sort_column} #{sort_direction}") : Movie.where("title is not null")
+    @movies = Movie.where("title is not null")
+    if params[:sort] 
+      @movies = @movies.order("#{sort_column} #{sort_direction}")
+      if params[:ratings]
+        ratings = params[:ratings].keys
+      elsif session[:ratings]
+        params[:ratings] = session[:ratings]
+        redirect_to params
+      end
+    elsif session[:sort]
+      params[:sort] = session[:sort]
+      redirect_to params
+    else
+      ratings = @all_ratings
+    end
     @movies = @movies.by_ratings(ratings)
-    
   end
 
   def new
@@ -49,5 +61,15 @@ class MoviesController < ApplicationController
   def sort_direction
     %w[asc desc].include?(params[:direction]) ? params[:direction] : "asc" 
   end
-
+  def store_session_info
+    store_session_ratings
+    store_session_sort_and_direction
+  end
+  def store_session_ratings
+    session[:ratings] = params[:ratings] if params[:ratings]
+  end
+  def store_session_sort_and_direction
+    session[:sort] = params[:sort] if params[:sort]
+    session[:direction] = params[:direction] if params[:direction]
+  end
 end
