@@ -23,8 +23,8 @@ class MoviesController < ApplicationController
       redirect_to params
     else
       ratings = @all_ratings
-      @movies = @movies.by_ratings(ratings)
     end
+    @movies = @movies.by_ratings(ratings)
   end
 
   def new
