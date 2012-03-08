@@ -122,5 +122,5 @@ js/tests/index.html: js/tests/index-8406d343ef634f0d467de059e385246b.html
 jquery-ui.min.js: jquery-ui.min-8b9c16ed13b920aebcfef3197711f61b.js
 jquery.min.js: jquery.min-e3cda086d77f5617dc07d5ee81cee7b2.js
 application.js: application-77bb0049190a218af927aa69a5cb707e.js
-application.css: application-d83ea4cf3f4075107d77fa8e8d3a01a3.css
+application.css: application-69ddd5e94bb6b2b97764ed9fa3d52176.css
 docs/assets/js/application.js: docs/assets/js/application-93541fd31c53059d4420ba864b16a62f.js
