@@ -5,16 +5,13 @@
   <h3>Include:</h3>
   <% @all_ratings.each do |rating| %>
     <%= rating %>
-    <% if params[:ratings]%>
-      <% logger.info "------ ==== ---- true"%>
-      <% if params[:ratings][rating] %>
-        <%= check_box_tag "ratings[#{rating}]", params[:ratings][rating], true %>
-      <% else -%>
-        <%= check_box_tag "ratings[#{rating}]", '0', false %>
-      <% end -%>
+    <% if (params[:ratings] and (params[:ratings][rating]))%>
+      <%= check_box_tag "ratings[#{rating}]", params[:ratings][rating], true %>
+    <% elsif (session[:ratings] and session[:ratings][rating]) -%>
+      <%= check_box_tag "ratings[#{rating}]", session[:ratings][rating], true %>
     <% else -%>
-     <%= check_box_tag "ratings[#{rating}]", '0', false %>
-   <% end -%>
+      <%= check_box_tag "ratings[#{rating}]", "0", false %>
+    <% end -%>
     <%= submit_tag "Refresh", id: "ratings_submit"%>
   <% end -%>
   <table class="table table-striped" id='movies'>
